@@ -11,19 +11,20 @@ Sistema de punto de venta desarrollado en Java con interfaz gráfica Swing.
 
 ```plaintext
 sistema_pos/
-├── bin/                    # Archivos compilados
-├── data/                   # Directorio de datos
+├── bin/                   # Archivos compilados
+├── data/                  # Directorio de datos
 │   ├── clientes.txt       # Registro de clientes
 │   └── productos.txt      # Registro de productos
-├── src/                    # Código fuente
+├── src/                   # Código fuente
+│   ├── data/              # Módulo de datos
 │   ├── controllers/       # Controladores
-│   ├── models/           # Modelos de datos
-│   ├── scripts/          # Scripts de utilidad
-│   ├── utils/            # Utilidades
-│   ├── view/             # Vistas
-│   └── Main.java         # Punto de entrada
+│   ├── models/            # Modelos de datos
+│   ├── scripts/           # Scripts de utilidad
+│   ├── utils/             # Utilidades
+│   ├── view/              # Vistas
+│   └── Main.java          # Punto de entrada
 ├── Ventas/                # Directorio de tickets de venta
-└── README.md             # Este archivo
+└── README.md              # Este archivo
 ```
 
 ## Casos de Uso
