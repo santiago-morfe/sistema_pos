@@ -7,6 +7,7 @@ public class MainWindow extends JFrame {
     private JTabbedPane tabbedPane;
     private ClienteView clienteView;
     private ProductoView productoView;
+    private VentaView ventaView;
 
     public MainWindow() {
         setTitle("Sistema POS");
@@ -20,10 +21,12 @@ public class MainWindow extends JFrame {
         tabbedPane = new JTabbedPane();
         
         // Crear las vistas
+        ventaView = new VentaView();
         clienteView = new ClienteView();
         productoView = new ProductoView();
 
         // Agregar las vistas al tabbedPane
+        tabbedPane.addTab("Ventas", new ImageIcon(), ventaView, "Gestión de Ventas");
         tabbedPane.addTab("Clientes", new ImageIcon(), clienteView, "Gestión de Clientes");
         tabbedPane.addTab("Productos", new ImageIcon(), productoView, "Gestión de Productos");
 

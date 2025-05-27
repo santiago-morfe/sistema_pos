@@ -25,7 +25,22 @@ public class ProductoView extends JPanel {
     }
 
     private void initComponents() {
-        // Panel de formulario
+        // Panel izquierdo - Tabla de productos
+        JPanel leftPanel = new JPanel(new BorderLayout());
+        String[] columnNames = {"Código", "Nombre", "Precio"};
+        tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblProductos = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(tblProductos);
+        leftPanel.add(scrollPane, BorderLayout.CENTER);
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Lista de Productos"));
+
+        // Panel derecho - Formulario
+        JPanel rightPanel = new JPanel(new BorderLayout());
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -62,21 +77,14 @@ public class ProductoView extends JPanel {
         buttonPanel.add(btnEliminar);
         buttonPanel.add(btnLimpiar);
 
-        // Tabla de productos
-        String[] columnNames = {"Código", "Nombre", "Precio"};
-        tableModel = new DefaultTableModel(columnNames, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        tblProductos = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(tblProductos);
+        rightPanel.add(formPanel, BorderLayout.CENTER);
+        rightPanel.add(buttonPanel, BorderLayout.SOUTH);
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Formulario de Producto"));
 
         // Agregar componentes al panel principal
-        add(formPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        splitPane.setDividerLocation(400);
+        add(splitPane, BorderLayout.CENTER);
 
         // Agregar listeners
         btnCrear.addActionListener(e -> crearProducto());
@@ -88,65 +96,6 @@ public class ProductoView extends JPanel {
                 seleccionarProducto();
             }
         });
-    }
-
-    private void crearProducto() {
-        try {
-            float precio = Float.parseFloat(txtPrecio.getText());
-            ProductoController.crearProducto(
-                txtCodigo.getText(),
-                txtNombre.getText(),
-                precio
-            );
-            JOptionPane.showMessageDialog(this, "Producto creado exitosamente");
-            limpiarFormulario();
-            cargarProductos();
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El precio debe ser un número válido",
-                "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void actualizarProducto() {
-        try {
-            float precio = Float.parseFloat(txtPrecio.getText());
-            ProductoController.actualizarProducto(
-                txtCodigo.getText(),
-                txtNombre.getText(),
-                precio
-            );
-            JOptionPane.showMessageDialog(this, "Producto actualizado exitosamente");
-            limpiarFormulario();
-            cargarProductos();
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El precio debe ser un número válido",
-                "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void eliminarProducto() {
-        try {
-            int confirmacion = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro de eliminar este producto?",
-                "Confirmar eliminación",
-                JOptionPane.YES_NO_OPTION);
-            
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                ProductoController.eliminarProducto(txtCodigo.getText());
-                JOptionPane.showMessageDialog(this, "Producto eliminado exitosamente");
-                limpiarFormulario();
-                cargarProductos();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void cargarProductos() {
@@ -164,6 +113,54 @@ public class ProductoView extends JPanel {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al cargar productos: " + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void crearProducto() {
+        try {
+            ProductoController.crearProducto(
+                txtCodigo.getText(),
+                txtNombre.getText(),
+                Float.parseFloat(txtPrecio.getText())
+            );
+            JOptionPane.showMessageDialog(this, "Producto creado exitosamente");
+            limpiarFormulario();
+            cargarProductos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void actualizarProducto() {
+        try {
+            ProductoController.actualizarProducto(
+                txtCodigo.getText(),
+                txtNombre.getText(),
+                Float.parseFloat(txtPrecio.getText())
+            );
+            JOptionPane.showMessageDialog(this, "Producto actualizado exitosamente");
+            limpiarFormulario();
+            cargarProductos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void eliminarProducto() {
+        try {
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de eliminar este producto?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION);
+            
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                ProductoController.eliminarProducto(txtCodigo.getText());
+                JOptionPane.showMessageDialog(this, "Producto eliminado exitosamente");
+                limpiarFormulario();
+                cargarProductos();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

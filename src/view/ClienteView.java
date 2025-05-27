@@ -29,7 +29,22 @@ public class ClienteView extends JPanel {
     }
 
     private void initComponents() {
-        // Panel de formulario
+        // Panel izquierdo - Tabla de clientes
+        JPanel leftPanel = new JPanel(new BorderLayout());
+        String[] columnNames = {"Identificación", "Tipo ID", "Nombres", "Apellidos", "Teléfono", "Correo"};
+        tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblClientes = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(tblClientes);
+        leftPanel.add(scrollPane, BorderLayout.CENTER);
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Lista de Clientes"));
+
+        // Panel derecho - Formulario
+        JPanel rightPanel = new JPanel(new BorderLayout());
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -84,21 +99,14 @@ public class ClienteView extends JPanel {
         buttonPanel.add(btnEliminar);
         buttonPanel.add(btnLimpiar);
 
-        // Tabla de clientes
-        String[] columnNames = {"Identificación", "Tipo ID", "Nombres", "Apellidos", "Teléfono", "Correo"};
-        tableModel = new DefaultTableModel(columnNames, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        tblClientes = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(tblClientes);
+        rightPanel.add(formPanel, BorderLayout.CENTER);
+        rightPanel.add(buttonPanel, BorderLayout.SOUTH);
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Formulario de Cliente"));
 
         // Agregar componentes al panel principal
-        add(formPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        splitPane.setDividerLocation(600);
+        add(splitPane, BorderLayout.CENTER);
 
         // Agregar listeners
         btnCrear.addActionListener(e -> crearCliente());
@@ -110,6 +118,27 @@ public class ClienteView extends JPanel {
                 seleccionarCliente();
             }
         });
+    }
+
+    private void cargarClientes() {
+        try {
+            tableModel.setRowCount(0);
+            List<Cliente> clientes = ClienteController.listarClientes();
+            for (Cliente cliente : clientes) {
+                Object[] row = {
+                    cliente.getIdentificacion(),
+                    cliente.getTipoIdentificacion(),
+                    cliente.getNombres(),
+                    cliente.getApellidos(),
+                    cliente.getTelefono(),
+                    cliente.getCorreoElectronico()
+                };
+                tableModel.addRow(row);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + ex.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void crearCliente() {
@@ -163,27 +192,6 @@ public class ClienteView extends JPanel {
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void cargarClientes() {
-        try {
-            tableModel.setRowCount(0);
-            List<Cliente> clientes = ClienteController.listarClientes();
-            for (Cliente cliente : clientes) {
-                Object[] row = {
-                    cliente.getIdentificacion(),
-                    cliente.getTipoIdentificacion(),
-                    cliente.getNombres(),
-                    cliente.getApellidos(),
-                    cliente.getTelefono(),
-                    cliente.getCorreoElectronico()
-                };
-                tableModel.addRow(row);
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + ex.getMessage(),
-                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

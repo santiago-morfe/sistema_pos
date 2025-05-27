@@ -1,0 +1,6 @@
+@echo off
+echo Compilando script...
+javac -d bin src/scripts/GenerarDatosPrueba.java
+echo Ejecutando script...
+java -cp bin scripts.GenerarDatosPrueba
+pause 

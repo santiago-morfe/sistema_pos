@@ -43,7 +43,7 @@ public class Validators {
 
     public static boolean isValidNombreProducto(String nombre) {
         return nombre != null && 
-               nombre.length() <= 10;
+               nombre.length() <= 20;
     }
 
     public static boolean isValidPrecio(float precio) {
