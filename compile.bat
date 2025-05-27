@@ -4,20 +4,20 @@ echo Compilando el proyecto...
 :: Crear directorio bin si no existe
 if not exist bin mkdir bin
 
-:: Compilar todos los archivos Java
-javac -d bin src/models/*.java src/controllers/*.java src/data/*.java src/view/*.java src/utils/*.java
-
-:: Verificar si la compilación fue exitosa
-if %errorlevel% neq 0 (
-    echo Error en la compilación
-    pause
-    exit /b %errorlevel%
+:: Compilar todos los archivos Java recursivamente (compatible con Windows)
+for /r %%f in (src\*.java) do (
+    javac -d bin -cp src "%%f"
+    if errorlevel 1 (
+        echo Error al compilar
+        pause
+        exit /b 1
+    )
 )
 
-echo Compilación exitosa
+echo Compilacion exitosa
 echo Ejecutando la aplicación...
 
 :: Ejecutar la aplicación
-java -cp bin view.MainWindow
+java -cp bin Main
 
-pause 
+pause

@@ -21,9 +21,9 @@ sistema_pos/
 │   ├── models/           # Modelos de datos
 │   ├── scripts/          # Scripts de utilidad
 │   ├── utils/            # Utilidades
-│   └── view/             # Vistas
+│   ├── view/             # Vistas
+│   └── Main.java         # Punto de entrada
 ├── Ventas/                # Directorio de tickets de venta
-├── Main.java             # Punto de entrada
 └── README.md             # Este archivo
 ```
 
@@ -32,7 +32,6 @@ sistema_pos/
 ### Gestión de Clientes
 
 1. **Registrar Cliente**
-
    - Ingresar identificación (8-10 dígitos)
    - Seleccionar tipo de identificación (CC/CE)
    - Ingresar nombres (10-30 caracteres)
@@ -41,58 +40,49 @@ sistema_pos/
    - Ingresar correo electrónico (formato válido)
 
 2. **Consultar Cliente**
-
    - Seleccionar cliente de la lista
    - Ver detalles en el formulario
    - Los campos son de solo lectura
 
 3. **Actualizar Cliente**
-
    - Seleccionar cliente de la lista
    - Modificar campos necesarios
    - Guardar cambios
 
 4. **Eliminar Cliente**
-
    - Seleccionar cliente de la lista
    - Confirmar eliminación
 
 ### Gestión de Productos
 
 1. **Registrar Producto**
-
    - Ingresar código (2 letras + 3 números)
    - Ingresar nombre (máximo 20 caracteres)
    - Ingresar precio (mayor que 0)
 
 2. **Consultar Producto**
-
    - Seleccionar producto de la lista
    - Ver detalles en el formulario
    - Los campos son de solo lectura
 
 3. **Actualizar Producto**
-
    - Seleccionar producto de la lista
    - Modificar campos necesarios
    - Guardar cambios
 
 4. **Eliminar Producto**
-
    - Seleccionar producto de la lista
    - Confirmar eliminación
 
 ### Gestión de Ventas
 
 1. **Crear Nueva Venta**
-
    - Seleccionar cliente de la lista desplegable
    - Agregar productos a la venta
    - Especificar cantidad para cada producto
    - Ver subtotal, IVA y total en tiempo real
 
 2. **Ver Detalle de Venta**
-
    - Seleccionar venta de la lista
    - Ver ticket completo con:
      - Información del cliente
@@ -102,51 +92,42 @@ sistema_pos/
      - Fecha y hora
 
 3. **Listar Ventas**
-
    - Ver todas las ventas realizadas
    - Información básica: número, fecha, cliente, total
 
-## Scripts de Utilidad
+## Compilación y Ejecución
 
-### Generar Datos de Prueba
+### En Windows
 
-El sistema incluye un script para generar datos de prueba que incluye:
+1. **Compilar:**
 
-- 10 clientes con datos válidos
-- 20 productos de diferentes categorías
-
-Para ejecutar el script:
-
-1. **En Windows:**
-
-   ```bash
-   generar_datos.bat
+   ```batch
+   @echo off
+   if not exist bin mkdir bin
+   javac -d bin src/Main.java
    ```
 
-2. **En Linux/macOS:**
+2. **Ejecutar:**
 
-   ```bash
-   chmod +x generar_datos.sh
-   ./generar_datos.sh
+   ```batch
+   @echo off
+   java -cp bin Main
    ```
 
-El script:
-
-- Crea el directorio `data` si no existe
-- Genera/actualiza los archivos `clientes.txt` y `productos.txt`
-- Muestra mensaje de éxito o error
-
-## Ejecución del Sistema
+### En Linux/macOS
 
 1. **Compilar:**
 
    ```bash
+   #!/bin/bash
+   mkdir -p bin
    javac -d bin src/Main.java
    ```
 
 2. **Ejecutar:**
 
    ```bash
+   #!/bin/bash
    java -cp bin Main
    ```
 
