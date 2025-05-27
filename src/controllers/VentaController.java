@@ -34,9 +34,9 @@ public class VentaController {
         }
     }
 
-    public static Venta iniciarVenta() {
-        return new Venta(null); // Iniciar sin cliente
-    }
+    // public static Venta iniciarVenta() {
+    //     return new Venta(null); // Iniciar sin cliente
+    // }
 
     public static void asociarCliente(Venta venta, String identificacionCliente) throws Exception {
         Cliente cliente = ClienteController.consultarCliente(identificacionCliente);
