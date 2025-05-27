@@ -114,7 +114,7 @@ sistema_pos/
 
    Ejecuta el siguiente script en la terminal:
    ```batch
-   ./generate_test_data.bat
+   ./generar_datos.bat
    ```
 
 ### En Linux/macOS
@@ -134,7 +134,7 @@ sistema_pos/
 
    Ejecuta el siguiente script en la terminal:
    ```bash
-   ./generate_test_data.sh
+   ./generar_datos.sh
    ```
 
 ## Validaciones
