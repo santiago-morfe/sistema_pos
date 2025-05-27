@@ -14,8 +14,7 @@ sistema_pos/
 ├── bin/                    # Archivos compilados
 ├── data/                   # Directorio de datos
 │   ├── clientes.txt       # Registro de clientes
-│   ├── productos.txt      # Registro de productos
-│   └── ventas.txt         # Registro de ventas
+│   └── productos.txt      # Registro de productos
 ├── src/                    # Código fuente
 │   ├── controllers/       # Controladores
 │   ├── models/           # Modelos de datos
@@ -103,13 +102,13 @@ sistema_pos/
 
    Ejecuta el siguiente script en la terminal:
    ```batch
-   compile.bat
+   ./compile.bat
    ```
 
 2. **Ejecutar:**
 
    ```batch
-   run.bat
+   ./run.bat
    ```
 
 ### En Linux/macOS
@@ -152,4 +151,3 @@ El sistema incluye validaciones para:
 - Formato de archivos:
   - Clientes: `identificacion*tipoIdentificacion*nombres*apellidos*telefono*correo`
   - Productos: `codigo*nombre*precio`
-  - Ventas: `numeroVenta*fechaHora*identificacionCliente*subtotal*iva*total*detalles`
