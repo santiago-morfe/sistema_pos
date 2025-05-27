@@ -9,6 +9,11 @@ public class ProductoController {
     
     public static void crearProducto(String codigo, String nombre, float precioVenta) throws Exception {
         // Validaciones
+
+        if (consultarProducto(codigo) != null) {
+            throw new Exception("El producto ya existe");
+        }
+
         if (codigo.length() != 5) {
             throw new Exception("El código debe tener 5 caracteres");
         }

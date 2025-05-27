@@ -10,7 +10,12 @@ public class ClienteController {
     public static void crearCliente(String identificacion, String tipoIdentificacion,
             String nombres, String apellidos, String telefono,
             String correoElectronico) throws Exception {
+
         // Validaciones
+        if (consultarCliente(identificacion) != null) {
+            throw new Exception("El cliente ya existe");
+        }
+
         if (identificacion.length() < 8 || identificacion.length() > 10) {
             throw new Exception("La identificación debe tener entre 8 y 10 dígitos");
         }
