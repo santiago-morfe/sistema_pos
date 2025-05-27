@@ -110,6 +110,12 @@ sistema_pos/
    ```batch
    ./run.bat
    ```
+3. **Generar datos de prueba**
+
+   Ejecuta el siguiente script en la terminal:
+   ```batch
+   ./generate_test_data.bat
+   ```
 
 ### En Linux/macOS
 
@@ -123,6 +129,12 @@ sistema_pos/
 
    ```bash
    ./run.sh
+   ```
+3. **Generar datos de prueba**
+
+   Ejecuta el siguiente script en la terminal:
+   ```bash
+   ./generate_test_data.sh
    ```
 
 ## Validaciones
