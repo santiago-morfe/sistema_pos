@@ -1,0 +1,23 @@
+# Archivos de compilación y binarios
+bin/
+*.class
+
+# Archivos de datos
+*.txt
+
+# Librerías externas
+lib/
+
+# Archivos de configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración de IDEs
+*.iml
+.idea/
+.vscode/
+
+# Archivos temporales
+*.log
+*.tmp
+
