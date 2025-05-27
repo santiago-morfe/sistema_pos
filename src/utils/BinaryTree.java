@@ -138,9 +138,34 @@ public class BinaryTree {
                         // Datos del cliente
                         else if (line.startsWith("Nombre Completo:")) {
                             String nombreCompleto = line.split(":")[1].trim();
+                            String identificacion = "";
+                            String tipoIdentificacion = "";
+                            String telefono = "";
+                            String correo = "";
                             String[] nombres = nombreCompleto.split(" ", 2);
-                            Cliente cliente = new Cliente("1234567890", "CC", nombres[0], 
-                                nombres.length > 1 ? nombres[1] : "", "1234567890", "cliente@email.com");
+                            String apellidos = nombres.length > 1 ? nombres[1] : "";
+                            String nombresCliente = nombres[0];
+                            // Buscar los siguientes datos del cliente en las siguientes líneas
+                            int j = i + 1;
+                            while (j < lines.length) {
+                                String nextLine = lines[j].trim();
+                                if (nextLine.startsWith("Identificación:")) {
+                                    String[] idParts = nextLine.split(":")[1].trim().split(" ", 2);
+                                    if (idParts.length == 2) {
+                                        tipoIdentificacion = idParts[0];
+                                        identificacion = idParts[1];
+                                    }
+                                } else if (nextLine.startsWith("Teléfono:")) {
+                                    telefono = nextLine.split(":")[1].trim();
+                                } else if (nextLine.startsWith("Correo:")) {
+                                    correo = nextLine.split(":")[1].trim();
+                                    break; // Último dato del cliente
+                                } else if (nextLine.isEmpty()) {
+                                    break;
+                                }
+                                j++;
+                            }
+                            Cliente cliente = new Cliente(identificacion, tipoIdentificacion, nombresCliente, apellidos, telefono, correo);
                             venta.setCliente(cliente);
                         }
                         // Productos
@@ -152,7 +177,6 @@ public class BinaryTree {
                                 if (productoData.length >= 5) {
                                     try {
                                         String codigo = productoData[0];
-                                        // --- Mejora: nombre con espacios ---
                                         // El nombre es todo lo que está entre el código y el precio
                                         int idxPrecio = productoData.length - 3;
                                         StringBuilder nombreBuilder = new StringBuilder();
