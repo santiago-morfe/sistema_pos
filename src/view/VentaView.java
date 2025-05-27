@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
+import java.util.Comparator;
 import models.Venta;
 import controllers.VentaController;
 
@@ -12,6 +13,8 @@ public class VentaView extends JPanel {
     private DefaultTableModel tableModel;
     private JButton btnNuevaVenta;
     private JButton btnVerDetalle;
+    private JButton btnOrdenar;
+    private boolean ordenAscendente = true;
 
     public VentaView() {
         setLayout(new BorderLayout());
@@ -35,8 +38,10 @@ public class VentaView extends JPanel {
         JPanel buttonPanel = new JPanel();
         btnNuevaVenta = new JButton("Nueva Venta");
         btnVerDetalle = new JButton("Ver Detalle");
+        btnOrdenar = new JButton("Ordenar ↑");
         buttonPanel.add(btnNuevaVenta);
         buttonPanel.add(btnVerDetalle);
+        buttonPanel.add(btnOrdenar);
 
         // Agregar componentes al panel principal
         add(scrollPane, BorderLayout.CENTER);
@@ -45,24 +50,82 @@ public class VentaView extends JPanel {
         // Agregar listeners
         btnNuevaVenta.addActionListener(e -> abrirNuevaVenta());
         btnVerDetalle.addActionListener(e -> verDetalleVenta());
+        btnOrdenar.addActionListener(e -> ordenarVentas());
+    }
+
+    private void ordenarVentas() {
+        try {
+            List<Venta> ventas = VentaController.listarVentas();
+            
+            // Ordenar la lista
+            if (ordenAscendente) {
+                ventas.sort(Comparator.comparingDouble(Venta::getTotal));
+                btnOrdenar.setText("Ordenar ↓");
+            } else {
+                ventas.sort(Comparator.comparingDouble(Venta::getTotal).reversed());
+                btnOrdenar.setText("Ordenar ↑");
+            }
+            
+            // Actualizar la tabla
+            tableModel.setRowCount(0);
+            for (Venta venta : ventas) {
+                if (venta == null) continue;
+                
+                String clienteInfo = "Sin cliente";
+                if (venta.getCliente() != null) {
+                    clienteInfo = venta.getCliente().getNombres() + " " + venta.getCliente().getApellidos();
+                }
+                
+                Object[] row = {
+                    venta.getNumeroVenta(),
+                    venta.getFechaHora(),
+                    clienteInfo,
+                    String.format("%.2f", venta.getTotal())
+                };
+                tableModel.addRow(row);
+            }
+            
+            ordenAscendente = !ordenAscendente;
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al ordenar ventas: " + ex.getMessage(),
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void cargarVentas() {
         try {
             tableModel.setRowCount(0);
             List<Venta> ventas = VentaController.listarVentas();
+            
+            if (ventas == null || ventas.isEmpty()) {
+                return; // No hay ventas para mostrar
+            }
+            
             for (Venta venta : ventas) {
+                if (venta == null) continue;
+                
+                String clienteInfo = "Sin cliente";
+                if (venta.getCliente() != null) {
+                    clienteInfo = venta.getCliente().getNombres() + " " + venta.getCliente().getApellidos();
+                }
+                
                 Object[] row = {
                     venta.getNumeroVenta(),
                     venta.getFechaHora(),
-                    venta.getCliente().getNombres() + " " + venta.getCliente().getApellidos(),
-                    venta.getTotal()
+                    clienteInfo,
+                    String.format("%.2f", venta.getTotal())
                 };
                 tableModel.addRow(row);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar ventas: " + ex.getMessage(),
-                "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                "Error al cargar ventas: " + ex.getMessage(),
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 
