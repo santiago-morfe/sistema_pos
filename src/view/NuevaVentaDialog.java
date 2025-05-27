@@ -1,15 +1,16 @@
 package view;
 
+import controllers.ClienteController;
+import controllers.ProductoController;
+import controllers.VentaController;
+import java.awt.*;
+import java.io.IOException;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.util.List;
-import models.Venta;
-import models.Producto;
 import models.Cliente;
-import controllers.VentaController;
-import controllers.ProductoController;
-import controllers.ClienteController;
+import models.Producto;
+import models.Venta;
 
 public class NuevaVentaDialog extends JDialog {
     private JTable tblProductos;
@@ -21,7 +22,7 @@ public class NuevaVentaDialog extends JDialog {
     private JButton btnAgregarProducto;
     private JButton btnAsociarCliente;
     private JButton btnFinalizarVenta;
-    private Venta ventaActual;
+    private final Venta ventaActual;
 
     public NuevaVentaDialog(Component parent) {
         super((Frame)SwingUtilities.getWindowAncestor(parent), "Nueva Venta", true);
@@ -78,8 +79,7 @@ public class NuevaVentaDialog extends JDialog {
             public Component getListCellRendererComponent(JList<?> list, Object value, int index,
                     boolean isSelected, boolean cellHasFocus) {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (value instanceof Cliente) {
-                    Cliente cliente = (Cliente) value;
+                if (value instanceof Cliente cliente) {
                     setText(cliente.getNombres() + " " + cliente.getApellidos() + " (" + cliente.getIdentificacion() + ")");
                 }
                 return this;
@@ -126,7 +126,7 @@ public class NuevaVentaDialog extends JDialog {
             for (Cliente cliente : clientes) {
                 cmbClientes.addItem(cliente);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -144,7 +144,7 @@ public class NuevaVentaDialog extends JDialog {
                 };
                 tableModelProductos.addRow(row);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error al cargar productos: " + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -216,7 +216,7 @@ public class NuevaVentaDialog extends JDialog {
             JOptionPane.showMessageDialog(this, 
                 "Venta finalizada exitosamente.\nArchivo generado: " + nombreArchivo);
             dispose();
-        } catch (Exception ex) {
+        } catch (HeadlessException | IOException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }

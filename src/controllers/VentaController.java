@@ -3,17 +3,22 @@ package controllers;
 import java.io.*;
 import java.nio.file.*;
 import java.util.List;
-import models.Venta;
 import models.Cliente;
 import models.Producto;
+import models.Venta;
 import utils.BinaryTree;
 
 public class VentaController {
     private static final String VENTAS_DIR = "Ventas";
     private static int contadorVentas = 0;
-    private static BinaryTree ventasTree = new BinaryTree();
+    private static BinaryTree ventasTree;
 
     static {
+        inicializarVentas();
+    }
+
+    private static void inicializarVentas() {
+        ventasTree = new BinaryTree();
         // Crear directorio de ventas si no existe
         try {
             Files.createDirectories(Paths.get(VENTAS_DIR));

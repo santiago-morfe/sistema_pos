@@ -1,12 +1,13 @@
 package view;
 
+import controllers.VentaController;
+import java.awt.*;
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.util.List;
-import java.util.Comparator;
 import models.Venta;
-import controllers.VentaController;
 
 public class VentaView extends JPanel {
     private JTable tblVentas;
@@ -125,7 +126,6 @@ public class VentaView extends JPanel {
                 "Error al cargar ventas: " + ex.getMessage(),
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
         }
     }
 
@@ -147,7 +147,7 @@ public class VentaView extends JPanel {
                 scrollPane.setPreferredSize(new Dimension(500, 400));
                 JOptionPane.showMessageDialog(this, scrollPane, 
                     "Detalle de Venta " + numeroVenta, JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
+            } catch (HeadlessException | IOException ex) {
                 JOptionPane.showMessageDialog(this, "Error al cargar el detalle: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
             }

@@ -12,9 +12,9 @@ public class Venta {
     private static final float IVA = 0.19f;
 
     private String numeroVenta;
-    private LocalDateTime fechaHora;
+    private final LocalDateTime fechaHora;
     private Cliente cliente;
-    private List<DetalleVenta> detalles;
+    private final List<DetalleVenta> detalles;
     private float subtotal;
     private float totalIva;
     private float total;

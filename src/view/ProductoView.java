@@ -1,11 +1,12 @@
 package view;
 
+import controllers.ProductoController;
+import java.awt.*;
+import java.io.IOException;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.util.List;
 import models.Producto;
-import controllers.ProductoController;
 
 public class ProductoView extends JPanel {
     private JTextField txtCodigo;
@@ -110,7 +111,7 @@ public class ProductoView extends JPanel {
                 };
                 tableModel.addRow(row);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error al cargar productos: " + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -159,7 +160,7 @@ public class ProductoView extends JPanel {
                 limpiarFormulario();
                 cargarProductos();
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException | IOException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

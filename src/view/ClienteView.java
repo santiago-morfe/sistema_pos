@@ -1,12 +1,12 @@
 package view;
 
+import controllers.ClienteController;
+import java.awt.*;
+import java.io.IOException;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-// import java.awt.event.*;
-import java.util.List;
 import models.Cliente;
-import controllers.ClienteController;
 
 public class ClienteView extends JPanel {
     private JTextField txtIdentificacion;
@@ -135,7 +135,7 @@ public class ClienteView extends JPanel {
                 };
                 tableModel.addRow(row);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -190,7 +190,7 @@ public class ClienteView extends JPanel {
                 limpiarFormulario();
                 cargarClientes();
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException | IOException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
