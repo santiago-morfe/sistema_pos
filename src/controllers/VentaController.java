@@ -17,6 +17,15 @@ public class VentaController {
         inicializarVentas();
     }
 
+    /**
+     * Inicializa el sistema de ventas:
+     * 1. Crea una nueva instancia del árbol binario de ventas.
+     * 2. Crea el directorio de ventas si no existe.
+     * 3. Cuenta la cantidad de archivos de ventas existentes (archivos que cumplen el patrón "VEN*.txt")
+     *    para mantener actualizado el contador de ventas.
+     * 4. Carga todas las ventas existentes desde los archivos del directorio al árbol binario.
+     * 5. Si ocurre algún error, imprime el mensaje y termina la aplicación.
+     */
     private static void inicializarVentas() {
         ventasTree = new BinaryTree();
         // Crear directorio de ventas si no existe
@@ -91,4 +100,4 @@ public class VentaController {
         Path rutaArchivo = Paths.get(VENTAS_DIR, nombreArchivo);
         return Files.readString(rutaArchivo);
     }
-} 
+}
