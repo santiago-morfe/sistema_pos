@@ -101,17 +101,15 @@ sistema_pos/
 
 1. **Compilar:**
 
+   Ejecuta el siguiente script en la terminal:
    ```batch
-   @echo off
-   if not exist bin mkdir bin
-   javac -d bin src/Main.java
+   compile.bat
    ```
 
 2. **Ejecutar:**
 
    ```batch
-   @echo off
-   java -cp bin Main
+   run.bat
    ```
 
 ### En Linux/macOS
@@ -119,16 +117,13 @@ sistema_pos/
 1. **Compilar:**
 
    ```bash
-   #!/bin/bash
-   mkdir -p bin
-   javac -d bin src/Main.java
+   ./compile.sh
    ```
 
 2. **Ejecutar:**
 
    ```bash
-   #!/bin/bash
-   java -cp bin Main
+   ./run.sh
    ```
 
 ## Validaciones
